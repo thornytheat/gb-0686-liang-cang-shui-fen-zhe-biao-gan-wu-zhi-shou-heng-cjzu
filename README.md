@@ -23,6 +23,7 @@ docker compose config --quiet
 - M5 仓批平衡：逐仓核对干物质平衡，入口 `/m/5`、`GET/POST /api/m5`。
 - M6 结算复核：结算到分并保留尾差依据，入口 `/m/6`、`GET/POST /api/m6`。
 - M7 批次追溯：检查行数平衡与证据摘要，入口 `/m/7`、`GET/POST /api/m7`。
+- M8 标准调整：水分标准分批生效，原结算单保留，生成关联原批次的新版本结算，入口在 `/m/6` 页面、`POST /api/adjustments`。
 
 ## 演示与复核
 

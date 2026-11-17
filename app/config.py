@@ -10,3 +10,4 @@ SAMPLES = Path(__file__).resolve().parent.parent / "sample_data"
 MAX_BYTES = 4 * 1024 * 1024
 
 COLUMNS.update({'clean_kg':'净粮 kg','delta_kg':'平衡差 kg','moisture':'水分 %','impurity':'杂质 %','key':'业务键','detail':'依据','unit':'单位','gross':'毛重','tare':'皮重'})
+COLUMNS.update({'old_standard':'原标准水分 %','new_standard':'新标准水分 %','old_standard_kg':'原折标 kg','new_standard_kg':'新折标 kg','delta_kg':'折标差 kg','old_amount':'原金额 CNY','new_amount':'新金额 CNY','amount_delta':'差额 CNY','status':'状态'})

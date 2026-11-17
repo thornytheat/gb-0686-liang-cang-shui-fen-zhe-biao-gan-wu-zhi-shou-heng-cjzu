@@ -4,3 +4,5 @@ __pycache__
 *.sqlite*
 .venv
 .git
+
+.pydeps

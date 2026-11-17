@@ -25,6 +25,8 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+.pydeps/
+data/
 target/
 *.o
 *.obj

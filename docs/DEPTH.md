@@ -15,6 +15,7 @@
 | M5 仓批平衡 | 逐仓核对干物质平衡 | `/api/m5` | `app/modules/m5_balance/rules.py` `app/modules/m5_balance/service.py` | `tests/test_m5_balance.py` |
 | M6 结算复核 | 结算到分并保留尾差依据 | `/api/m6` | `app/modules/m6_settlement/rules.py` `app/modules/m6_settlement/service.py` | `tests/test_m6_settlement.py` |
 | M7 批次追溯 | 检查行数平衡与证据摘要 | `/api/m7` | `app/modules/m7_trace/rules.py` `app/modules/m7_trace/service.py` | `tests/test_m7_trace.py` |
+| M8 标准调整 | 分批水分调整生成关联新版本结算 | `/api/adjustments` | `app/modules/m8_adjustment/rules.py` `app/modules/m8_adjustment/service.py` | `tests/test_m8_adjustment.py` |
 
 ## 陷阱登记
 
@@ -28,6 +29,10 @@
 | TRAP-14 | 同版矛盾 | 后写覆盖 | 同版均隔离 | `app/modules/m4_truckmerge/rules.py` | `tests/test_m4_truckmerge.py::test_conflict_keeps_neither` |
 | TRAP-15 | 吨与千克 | 数量差千倍 | 统一kg | `app/modules/m2_contract/rules.py` | `tests/test_m2_contract.py::test_unit_ton` |
 | TRAP-24 | 结算尾差 | 分录不守恒 | 最大余额分到分 | `app/modules/m6_settlement/rules.py` | `tests/test_m6_settlement.py::test_largest_remainder_conservation` |
+| TRAP-31 | 直接改标准参数 | 旧结算单被追溯改写 | 调整写独立adjustments表，runs原单不动 | `app/modules/m8_adjustment/store.py` | `tests/test_m8_adjustment.py::test_adjustment_creates_new_version_without_touching_original` |
+| TRAP-32 | 调整中断 | 重跑重复车次/分录或漏车 | 车次主键幂等落库，从已确认车次续跑 | `app/modules/m8_adjustment/service.py` | `tests/test_m8_adjustment.py::test_interrupted_run_resumes_from_confirmed_trucks` |
+| TRAP-33 | 两版基准漂移 | 干物质被新参数悄悄改掉 | 逐车核对净粮×(1-水分)=存档干物质，不符整单失败 | `app/modules/m8_adjustment/rules.py` | `tests/test_m8_adjustment.py::test_dry_matter_mismatch_fails_open_and_keeps_original_ledger` |
+| TRAP-34 | 重跑同一调整 | 生成第二张调整单/重复分录 | 调整单ID哈希绑定原批次+新旧标准+规则版本 | `app/modules/m8_adjustment/rules.py` | `tests/test_m8_adjustment.py::test_same_adjustment_rerun_is_idempotent` |
 
 ## 对账规则
 
